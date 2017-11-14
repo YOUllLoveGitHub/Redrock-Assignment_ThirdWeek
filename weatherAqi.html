@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 01</title>
+</head>
+<body>
+
+<h3>污染城市列表</h3>
+<ul id="aqi-list">
+    <!--
+        <li>第一名：福州（样例），10</li>
+          <li>第二名：福州（样例），10</li> -->
+</ul>
+
+<script type="text/javascript">
+
+    var aqiData = [
+        ["北京", 90],
+        ["上海", 50],
+        ["福州", 10],
+        ["广州", 50],
+        ["成都", 90],
+        ["西安", 100],
+        ["郑州", 99],
+        ["湖南", 85],
+        ["湖北", 62],
+        ["江西", 75],
+        // ["北京", 90],
+        // ["上海", 50],
+        // ["福州", 10],
+        // ["广州", 50],
+        // ["成都", 90],
+        // ["西安", 100],
+        // ["郑州", 99],
+        // ["湖南", 85],
+        // ["湖北", 62],
+        // ["江西", 75],
+        // ["北京", 90],
+        // ["上海", 50],
+        // ["福州", 10],
+        // ["广州", 50],
+        // ["成都", 90],
+        // ["西安", 100],
+        // ["郑州", 99],
+        // ["湖南", 85],
+        // ["湖北", 62],
+        ["江西", 75]
+    ];
+
+    (function () {
+
+        /*
+  在注释下方编写代码
+  遍历读取aqiData中各个城市的数据
+  将空气质量指数大于60的城市显示到aqi-list的列表中
+  */
+        var temp = new Array();
+        //获取顺序排列的达标城市数组.
+        for (var i = 0; i < aqiData.length; i++) {
+            if (parseInt(getValue(aqiData[i])) >= 60) {
+                temp = findAPlace(temp,aqiData[i]);
+            }
+        }
+        //输出数组.
+        for (var i = 0; i < temp.length; i++){
+            addElement(i,temp);
+        }
+
+        //方法
+        //为每个达标城市排序.
+        function findAPlace(temp,thisCity) {
+            if (temp.length == 0) {
+                temp.push(thisCity);
+            } else {
+                var count = 0;
+                var Temp_02 = temp;
+                for (var i = 0; i < Temp_02.length; i++) {
+                    if (parseInt(getValue(thisCity)) > parseInt(getValue(Temp_02[i]))) {
+                        temp.splice(i, 0, thisCity);
+                        return temp;
+                    }
+                }
+                temp.push(thisCity);
+            }
+            return temp;
+        }
+
+        //获取空气质量值.
+        function getValue(thisCity){
+            var value = thisCity.toString().replace(/[^0-9]/ig,"");
+            return value;
+        }
+
+        //添加一列数据(li).
+        function addElement(i,aqi) {
+            var ul = document.getElementById("aqi-list");
+            var node = document.createElement("li");
+            node.innerHTML = "第" + translate(i+1) + "名: " + aqi[i].toString().replace(/\"/g,"");
+            ul.appendChild(node);
+        }
+
+        //转化罗马数字为大写中文(仅支持0-99).
+        function translate(i){
+          var numList = ['零','一','二','三','四','五','六','七','八','九','十'];
+          if (i<=10) {
+            return numList[i];
+          }else if(i>10 && i<=19){
+            var ch = "十" + numList[i%10];
+            return ch;
+          }else if(i>=20 && i<100){
+            if(i%10 == 0){
+              var ch = numList[parseInt(i/10)] + "十";
+              return ch;
+            }
+            else{
+              var ch = numList[parseInt(i/10)] + "十" + numList[i%10];
+              return ch;
+            }
+          }
+        }
+  })();
+
+</script>
+</body>
+</html>
