@@ -45,7 +45,7 @@
         // ["郑州", 99],
         // ["湖南", 85],
         // ["湖北", 62],
-        ["江西", 75]
+        // ["江西", 75]
     ];
 
     (function () {
@@ -56,13 +56,13 @@
   将空气质量指数大于60的城市显示到aqi-list的列表中
   */
         var temp = new Array();
-        //获取顺序排列的达标城市数组.
+        //获取按顺序排列的达标城市数组.
         for (var i = 0; i < aqiData.length; i++) {
-            if (parseInt(getValue(aqiData[i])) >= 60) {
+            if (aqiData[i][1] >= 60) {
                 temp = findAPlace(temp,aqiData[i]);
             }
         }
-        //输出数组.
+        //输出排序后的数组至浏览器.
         for (var i = 0; i < temp.length; i++){
             addElement(i,temp);
         }
@@ -76,7 +76,7 @@
                 var count = 0;
                 var Temp_02 = temp;
                 for (var i = 0; i < Temp_02.length; i++) {
-                    if (parseInt(getValue(thisCity)) > parseInt(getValue(Temp_02[i]))) {
+                    if (thisCity[1] > Temp_02[i][1]) {
                         temp.splice(i, 0, thisCity);
                         return temp;
                     }
@@ -86,11 +86,11 @@
             return temp;
         }
 
-        //获取空气质量值.
-        function getValue(thisCity){
-            var value = thisCity.toString().replace(/[^0-9]/ig,"");
-            return value;
-        }
+        //获取空气质量值.(废弃)
+        // function getValue(thisCity){
+        //     var value = thisCity.toString().replace(/[^0-9]/ig,"");
+        //     return value;
+        // }
 
         //添加一列数据(li).
         function addElement(i,aqi) {
